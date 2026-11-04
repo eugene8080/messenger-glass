@@ -1,0 +1,25 @@
+{
+  "package_id": "com.eugene8080.messengerglass",
+  "edition": "202601",
+  "name": "Messenger Glass",
+  "version": "0.0.1",
+  "min_app_version": "2.2.10",
+  "min_sdk_version": "0.0.16",
+  "entrypoint": "index.html",
+  "permissions": [
+    {
+      "name": "network",
+      "desc": "Connects to the Matrix homeserver and messaging bridges running on your own PC, over your own Tailscale network.",
+      "whitelist": [
+        "https://your-pc.your-tailnet.ts.net:8448"
+      ]
+    },
+    {
+      "name": "g2-microphone",
+      "desc": "Records a voice reply after you choose to reply; audio is transcribed on your own PC and nothing is sent until you confirm."
+    }
+  ],
+  "supported_languages": [
+    "en"
+  ]
+}

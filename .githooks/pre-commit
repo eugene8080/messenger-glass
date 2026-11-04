@@ -1,0 +1,43 @@
+#!/bin/sh
+# Blocks a commit whose staged changes contain private identifiers.
+#
+# Why: this repository is public, and the maintainer's machine name, tailnet name, local paths and
+# contacts must never reach it. The patterns themselves are private too, so they live in the untracked
+# file .local/private-patterns.txt (one extended regex per line; lines starting with # are comments).
+# A missing pattern file is a hard failure, not a pass: a fresh clone that forgot to create it would
+# otherwise commit unchecked.
+#
+# Enable once per clone:  git config core.hooksPath .githooks
+
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+patterns="$repo_root/.local/private-patterns.txt"
+
+if [ ! -f "$patterns" ]; then
+    echo "pre-commit: $patterns is missing." >&2
+    echo "Create it with one regex per line for private identifiers (machine name, tailnet, paths)." >&2
+    exit 1
+fi
+
+# Strip comments and blank lines; grep -f with an empty pattern list would match every line.
+active=$(mktemp)
+trap 'rm -f "$active"' EXIT
+grep -v -e '^[[:space:]]*#' -e '^[[:space:]]*$' "$patterns" > "$active" || true
+
+if [ ! -s "$active" ]; then
+    echo "pre-commit: $patterns has no active patterns." >&2
+    exit 1
+fi
+
+# Only ADDED lines matter (lines starting with '+', excluding the '+++' file header). --cached = staged.
+hits=$(git diff --cached --no-color -U0 | grep -e '^+' | grep -v -e '^+++' | grep -i -E -f "$active" || true)
+
+if [ -n "$hits" ]; then
+    echo "pre-commit: staged changes contain private identifiers:" >&2
+    echo "$hits" >&2
+    echo "Move them to INTERNAL.md, app/app.local.json or .local/ (all untracked)." >&2
+    exit 1
+fi
+
+exit 0

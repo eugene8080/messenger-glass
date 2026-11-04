@@ -1,0 +1,20 @@
+node_modules/
+dist/
+*.ehpk
+.local/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Server state and secrets: homeserver database, bridge registrations, network sessions
+server/data/
+server/**/registration.yaml
+server/**/*.db
+server/**/*.db-*
+server/**/config.local.yaml
+companion/models/
+
+# Private to the maintainer: machine, paths, real origin (docs/design.md section 7)
+INTERNAL.md
+app/app.local.json

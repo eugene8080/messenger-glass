@@ -8,7 +8,7 @@ updated: 2026-11-04
 
 # Messenger Glass — design note
 
-Updated: 2026-11-04. Status: **draft for the owner's approval.** No app code is written yet.
+Updated: 2026-11-04. Status: **approved by the owner 2026-11-04 (P0).** No app code is written yet.
 
 ## 1. What it is
 
@@ -127,7 +127,7 @@ address.
 | # | Question | Who decides | Status |
 |---|---|---|---|
 | Q1 | Homeserver: Synapse, or a Conduit-family server (Continuwuity / Tuwunel)? | agent default, reversible | **Synapse.** The mautrix documentation targets it. Revisit if its memory use is a problem. |
-| Q2 | Where do the containers run: the host PC (Docker Desktop or WSL2), or an always-on NAS? | checked 2026-11-04; the owner picks | **Host PC:** read-only check, 2026-11-04: no Docker, Podman or Rancher Desktop. WSL 2.7 is installed, default version 2, no distros. P1 would install a runtime. **NAS (raised by the owner 2026-11-04):** a Synology DS1618+ (x86-64, 4-core Atom C3538; DSM 7 with the legacy Docker package, already running containers; on the tailnet). Assessment: the homeserver and bridges are light and fit, and an always-on host keeps the bridges connected when the PC is off. The STT companion does not fit: the Atom C3538 (Goldmont) has no AVX, so CPU Whisper is too slow. STT stays on the PC, so voice replies need the PC on, and the app needs a second allowlisted origin for `/stt` (§3 decision 2). Open before P1: installed RAM (4 GB stock), SSH (off today), compose under the legacy Docker package or DSM 7.2 Container Manager, `tailscale serve` on the NAS package. |
+| Q2 | Where do the containers run: the host PC (Docker Desktop or WSL2), or an always-on NAS? | decided by the owner, 2026-11-04 | **Host PC, WSL2 (Ubuntu) + Docker Engine.** Facts, 2026-11-04: the PC has no container runtime yet (WSL 2.7 installed, no distro). It is effectively always on: sleep on AC is off, and its 11 restarts in 60 days were all clean and took about a minute each. The alternative was an always-on Synology DS1618+ (Atom C3538, 4 GB RAM, DSM 7 legacy Docker package). It was rejected because 4 GB is tight beside DSM, and its CPU has no AVX, so Whisper would still run on the PC: two hosts and two origins, for little uptime gain. Docker Engine in WSL2 over Docker Desktop: no licence terms and lighter. P1 adds a startup task so the stack runs without a logon. A fork user can use any runtime that runs the compose file. |
 | Q3 | Can an Even Hub app receive new-message alerts when it is not open on the glasses? | read the Even Hub SDK docs, 2026-11-04 | **No.** Even Hub FAQ (updated 2026-10-09, <https://hub.evenrealities.com/docs/reference/faq>): "Can I receive push notifications? **No.** Plugins are foreground-only on the glasses." and "Can I make network calls while backgrounded? **No.** WebView is suspended on background; in-flight requests stall." The older Background & Lifecycle page (updated 2026-06-22, <https://hub.evenrealities.com/docs/build/background-lifecycle>) says the iOS WebView keeps running and Android "may be suspended under memory pressure". The design follows the newer, stricter FAQ (§6). The SDK listeners (`onEvenHubEvent`, `onAppLocationChanged`, `onDeviceStatusChanged`) have no documented background delivery. |
 | Q4 | Public Even Hub listing, or private beta only? | decided by the owner, 2026-11-04 | **private beta only** |
 | Q5 | Repo hosting | decided by the owner, 2026-11-04 | **public GitHub repo** `eugene8080/messenger-glass` |
@@ -137,7 +137,7 @@ address.
 
 | Phase | Scope | Done when |
 |---|---|---|
-| P0 | This note, the repo layout, the manifest | The owner approves this note |
+| P0 | This note, the repo layout, the manifest | The owner approves this note (done 2026-11-04) |
 | P1 | `server/`: homeserver plus mautrix-whatsapp on the host PC, behind `tailscale serve` | A WhatsApp chat appears as a Matrix room, read with `curl` over the tailnet origin |
 | P2 | `app/`: chat list and thread reader over `/sync`; build merges `app/app.local.json` | Readable on the G2 simulator, then on the glasses |
 | P3 | `companion/` plus the voice reply with review | A reply sent from the glasses arrives in WhatsApp, and cancel sends nothing |

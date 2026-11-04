@@ -107,6 +107,12 @@ The G2 display is 576 × 288. The interaction patterns follow Orca Glass, for fa
   **Nothing is ever sent without the review step.**
 - **Read receipts:** off by default (opening a thread on the glasses does not mark it read on the network).
   This is a privacy default, reversible in settings.
+- **New-message alerts come from the phone, not from this app** (§8 Q3). An Even Hub app runs only while it is
+  open on the glasses. The networks' own phone notifications cover alerts; the app shows unread state when it
+  is opened.
+- **Resume is a cold start.** The app keeps the `/sync` `since` token and the room list in `localStorage`. It
+  rebuilds everything else and syncs again on every launch or resume. On Android a backgrounded WebView can be
+  reclaimed, and on both platforms an in-flight long-poll can stall in background.
 
 ## 7. Privacy of this repository
 
@@ -121,8 +127,8 @@ address.
 | # | Question | Who decides | Status |
 |---|---|---|---|
 | Q1 | Homeserver: Synapse, or a Conduit-family server (Continuwuity / Tuwunel)? | agent default, reversible | **Synapse.** The mautrix documentation targets it. Revisit if its memory use is a problem. |
-| Q2 | How to run Linux containers on the host PC: Docker Desktop or WSL2? | check the machine first | open |
-| Q3 | Can an Even Hub app receive new-message alerts when it is not open on the glasses? | read the Even Hub SDK docs | open; assume no until checked (the phone's own notifications still mirror to the G2) |
+| Q2 | Where do the containers run: the host PC (Docker Desktop or WSL2), or an always-on NAS? | checked 2026-11-04; the owner picks | **Host PC:** read-only check, 2026-11-04: no Docker, Podman or Rancher Desktop. WSL 2.7 is installed, default version 2, no distros. P1 would install a runtime. **NAS (raised by the owner 2026-11-04):** a Synology DS1618+ (x86-64, 4-core Atom C3538; DSM 7 with the legacy Docker package, already running containers; on the tailnet). Assessment: the homeserver and bridges are light and fit, and an always-on host keeps the bridges connected when the PC is off. The STT companion does not fit: the Atom C3538 (Goldmont) has no AVX, so CPU Whisper is too slow. STT stays on the PC, so voice replies need the PC on, and the app needs a second allowlisted origin for `/stt` (§3 decision 2). Open before P1: installed RAM (4 GB stock), SSH (off today), compose under the legacy Docker package or DSM 7.2 Container Manager, `tailscale serve` on the NAS package. |
+| Q3 | Can an Even Hub app receive new-message alerts when it is not open on the glasses? | read the Even Hub SDK docs, 2026-11-04 | **No.** Even Hub FAQ (updated 2026-10-09, <https://hub.evenrealities.com/docs/reference/faq>): "Can I receive push notifications? **No.** Plugins are foreground-only on the glasses." and "Can I make network calls while backgrounded? **No.** WebView is suspended on background; in-flight requests stall." The older Background & Lifecycle page (updated 2026-06-22, <https://hub.evenrealities.com/docs/build/background-lifecycle>) says the iOS WebView keeps running and Android "may be suspended under memory pressure". The design follows the newer, stricter FAQ (§6). The SDK listeners (`onEvenHubEvent`, `onAppLocationChanged`, `onDeviceStatusChanged`) have no documented background delivery. |
 | Q4 | Public Even Hub listing, or private beta only? | decided by the owner, 2026-11-04 | **private beta only** |
 | Q5 | Repo hosting | decided by the owner, 2026-11-04 | **public GitHub repo** `eugene8080/messenger-glass` |
 | Q6 | Package ID | agent default, reversible until the first upload | `com.eugene8080.messengerglass` |

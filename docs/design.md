@@ -80,7 +80,7 @@ Decisions and the reason for each:
 |---|---|
 | `app/` | The Even Hub app: `app.json` manifest, TypeScript, Vite, `@evenrealities/even_hub_sdk`. |
 | `app/app.local.json` | **Untracked.** The user's real origin, merged into the manifest at build time (P2). |
-| `companion/` | The STT service: one HTTP endpoint, Whisper, localhost only, authenticated by the app's access token. |
+| `companion/` | The STT service, **in use since 2026-11-07 for the GazeChat fork (§8 Q7)**: `stt-server.mjs` serves the OpenAI-compatible `/v1/models` and `/v1/audio/transcriptions` on loopback, forwards to a resident whisper.cpp `whisper-server`, needs a bearer token from the untracked `.local/stt.json`, and never logs audio or transcripts. `start-stt.ps1` runs it from a logon task. |
 | `server/` | Deployment for the homeserver and the bridges: compose file, config templates, setup guide. |
 | `docs/` | This note and the user setup guide. |
 | `INTERNAL.md` | **Untracked.** The maintainer's own machine, paths and private notes. |

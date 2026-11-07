@@ -16,6 +16,6 @@ Updated: 2026-11-07. Design of record: `docs/design.md`. Phases: `docs/design.md
 | 10 | GazeChat fork: install the personal build on the glasses (private Even Hub beta upload) | 1.0.14 on beta 2026-11-07 (allowlist `"*"`; address entered in the app). Reading works on the glasses; sending needs a read+write token; transcription needs an STT server (see #13) | owner |
 | 11 | GazeChat fork: offer `fix/dev-only-log` upstream as a PR | opened 2026-11-07: <https://github.com/builtproper/gazechat/pull/1> | builtproper (review) |
 | 12 | Beeper as the WhatsApp source for the owner's other tools (details in `INTERNAL.md`) | not started; MCP first, the rest after 3–4 weeks of Beeper stability | owner |
-| 13 | Speech-to-text for GazeChat voice replies: local whisper.cpp (from Orca Glass) behind tailnet-only HTTPS, or an OpenAI key | not started | owner choice A/B |
+| 13 | Speech-to-text for GazeChat voice replies | done 2026-11-07: `companion/stt-server.mjs` (OpenAI-compatible, whisper.cpp, bearer token, loopback) behind tailnet-only `tailscale serve`; starts at logon. Tested with a sample WAV over the tailnet; not yet tested from the glasses | owner: enter Speech settings in GazeChat |
 
 Done 2026-11-04: §8 Q4 (private beta only) and Q5 (public GitHub repo) decided by the owner.

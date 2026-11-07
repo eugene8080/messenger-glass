@@ -13,8 +13,9 @@ Updated: 2026-11-07. Design of record: `docs/design.md`. Phases: `docs/design.md
 | 7 | P4: Signal + Telegram bridges | shelved 2026-11-07 (§8 Q7) | item 4 |
 | 8 | P5: setup guide for fork-and-build users | shelved 2026-11-07 (§8 Q7) | items 4–7 |
 | 9 | §8 Q7: build vs. Beeper-based plugin | decided 2026-11-07: Beeper Desktop + fork `eugene8080/gazechat` | — |
-| 10 | GazeChat fork: install the personal build on the glasses (private Even Hub beta upload) | uploaded 2026-11-07: `com.eugene8080.gazechat` 1.0.13, Private, beta channel; owner invited as tester. Not yet installed or tested on the glasses | owner: install from the Even app |
+| 10 | GazeChat fork: install the personal build on the glasses (private Even Hub beta upload) | 1.0.14 on beta 2026-11-07 (allowlist `"*"`; address entered in the app). Reading works on the glasses; sending needs a read+write token; transcription needs an STT server (see #13) | owner |
 | 11 | GazeChat fork: offer `fix/dev-only-log` upstream as a PR | opened 2026-11-07: <https://github.com/builtproper/gazechat/pull/1> | builtproper (review) |
 | 12 | Beeper as the WhatsApp source for the owner's other tools (details in `INTERNAL.md`) | not started; MCP first, the rest after 3–4 weeks of Beeper stability | owner |
+| 13 | Speech-to-text for GazeChat voice replies: local whisper.cpp (from Orca Glass) behind tailnet-only HTTPS, or an OpenAI key | not started | owner choice A/B |
 
 Done 2026-11-04: §8 Q4 (private beta only) and Q5 (public GitHub repo) decided by the owner.

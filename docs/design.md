@@ -3,12 +3,12 @@ type: design
 status: active
 parent: null
 blocked_by: []
-updated: 2026-11-04
+updated: 2026-11-07
 ---
 
 # Messenger Glass — design note
 
-Updated: 2026-11-04. Status: **approved by the owner 2026-11-04 (P0).** No app code is written yet.
+Updated: 2026-11-07. Status: **approved by the owner 2026-11-04 (P0).** No app code is written yet.
 
 ## 1. What it is
 
@@ -132,6 +132,7 @@ address.
 | Q4 | Public Even Hub listing, or private beta only? | decided by the owner, 2026-11-04 | **private beta only** |
 | Q5 | Repo hosting | decided by the owner, 2026-11-04 | **public GitHub repo** `eugene8080/messenger-glass` |
 | Q6 | Package ID | agent default, reversible until the first upload | `com.eugene8080.messengerglass` |
+| Q7 | Build this, or use the existing Even Hub plugin "Messages" / Message Lens (`solutions.pleiades.evenmessages`) over Beeper Desktop? | the owner | **Open.** Facts, 2026-11-07. *Plugin* (<https://github.com/thibautrey/even-messages>, v1.0.11, last commit 2026-10-09): the phone calls the Beeper Desktop API on the user's PC (port 23373) directly, with no author relay. Its network allowlist starts with `"*"`. The `.ehpk` is committed by hand, with no CI or checksum, so the store build cannot be matched to the source. Voice replies go to a user-set OpenAI-compatible STT endpoint (it prefers `gpt-4o-mini-transcribe`). The author said in issue #2 (2026-09-17) that they have no time to maintain it. *Beeper*: its open-source page says the official mautrix bridges "are the same bridges we run with On-Device Connections and also on Beeper Cloud", and Beeper maintains mautrix. So the code that talks to WhatsApp/Signal would be the same in both designs. What differs: the Beeper Desktop app and the Beeper account are not on Beeper's open-source list. Remote Access binds the API to `0.0.0.0`. bbctl self-hosted bridges work only with the beeper.com homeserver, not Synapse. |
 
 ## 9. Phases
 

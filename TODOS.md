@@ -1,6 +1,6 @@
 # Messenger Glass — TODOS
 
-Updated: 2026-11-07. Design of record: `docs/design.md`. Phases: `docs/design.md` §9.
+Updated: 2026-11-25. Design of record: `docs/design.md`. Phases: `docs/design.md` §9.
 
 | # | Item | Status | Waits on |
 |---|---|---|---|
@@ -17,5 +17,6 @@ Updated: 2026-11-07. Design of record: `docs/design.md`. Phases: `docs/design.md
 | 11 | GazeChat fork: offer `fix/dev-only-log` upstream as a PR | opened 2026-11-07: <https://github.com/builtproper/gazechat/pull/1> | builtproper (review) |
 | 12 | Beeper as the WhatsApp source for the owner's other tools (details in `INTERNAL.md`) | not started; MCP first, the rest after 3–4 weeks of Beeper stability | owner |
 | 13 | Speech-to-text for GazeChat voice replies | done 2026-11-07: `companion/stt-server.mjs` (OpenAI-compatible, whisper.cpp, bearer token, loopback) behind tailnet-only `tailscale serve`; starts at logon. Owner confirmed transcription from the glasses 2026-11-07 | — |
+| 14 | Gmail in GazeChat: `companion/mail-facade.mjs` in front of Beeper adds one read-only email account (work mailbox, Gmail label "6. Newsletters", one chat per sender); dedicated `gmail.readonly` token | built 2026-11-26: logon task + tailnet-only HTTPS; 20/20 end-to-end checks pass through the tailnet origin (email chats, read-only 403s, token 401s, Beeper pass-through, WebSocket). Not yet seen on the glasses | owner: point GazeChat's Beeper address at the facade |
 
 Done 2026-11-04: §8 Q4 (private beta only) and Q5 (public GitHub repo) decided by the owner.

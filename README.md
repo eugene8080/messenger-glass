@@ -1,5 +1,11 @@
 # Messenger Glass
 
+> **Retired 2026-11-27.** Not developed further. Chat and Email on G2 now run in Orca Glass
+> (https://github.com/eugene8080/orca-glass). The companion servers (`companion/stt-server.mjs`,
+> `companion/mail-facade.mjs`) were stopped, their scheduled tasks ("Messenger Glass - STT",
+> "Messenger Glass - Mail facade") disabled and their tailnet entries (:8448, :8449) removed on
+> 2026-11-27. This repository is archived (read-only).
+
 **WhatsApp, Signal, Telegram and more on your Even Realities G2 — from your own server.**
 
 Messenger Glass is a unified inbox for G2 glasses. You read chats on the glasses and reply by voice; nothing is
